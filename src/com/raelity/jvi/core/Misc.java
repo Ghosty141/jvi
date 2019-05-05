@@ -3556,50 +3556,6 @@ private static int put_in_typebuf(String s, boolean colon)
       }
     }
 
-  ////////////////////////////////////////////////////////////////////////////
-  //
-
-    /**
-     * For the current character offset in the current line,
-     * calculate the virtual offset. That is the offset if
-     * tabs are expanded. I *think* this is equivelent to getvcolStart(int).
-     *
-     * @deprecated
-     * use getvcol(ViTextView, ViFPOS, MutableInt, MutableInt, MutableInt)
-     */
-    static int getvcol() {
-      return getvcol(G.curwin.w_cursor.getColumn());
-    }
-
-    /**
-     * This method returns the start vcol of param for current line
-     * @deprecated
-     * use getvcol(ViTextView, ViFPOS, MutableInt, MutableInt, MutableInt)
-     */
-    static int getvcol(int endCol) {
-      int vcol = 0;
-      MySegment seg = G.curbuf.getLineSegment(G.curwin.w_cursor.getLine());
-      int ptr = seg.offset;
-      int idx = -1;
-      char c;
-      while (idx < endCol - 1
-              && idx < seg.count - 1
-              && (c = seg.array[ptr]) != '\n') {
-        ++idx;
-        /* Count a tab for what it's worth (if list mode not on) */
-        vcol += lbr_chartabsize(c, vcol);
-        ++ptr;
-      }
-      return vcol;
-    }
-
-  /*static void getvcol(ViFPOS fpos,
-                      MutableInt start,
-                      MutableInt cursor,
-                      MutableInt end) {
-    getvcol(G.curwin, fpos, start, cursor, end);
-  }*/
-
     /**
      * Get virtual column number of pos.
      *  start: on the first position of this character (TAB, ctrl)

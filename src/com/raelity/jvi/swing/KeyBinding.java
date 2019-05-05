@@ -48,7 +48,7 @@ import com.raelity.jvi.ViFactory;
 import com.raelity.jvi.ViInitialization;
 import com.raelity.jvi.manager.ViManager;
 
-import static java.awt.event.InputEvent.CTRL_MASK;
+import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 import static java.awt.event.InputEvent.SHIFT_MASK;
 
 import static com.raelity.jvi.core.lib.Constants.*;
@@ -204,7 +204,7 @@ private static Action createKeyAction( String name, char key ) {
     {
         // like: "Ctrl-A"
         String name = "Ctrl-" + String.valueOf(c);
-        checkUseKey(bl, name, name, c, CTRL_MASK);
+        checkUseKey(bl, name, name, c, CTRL_DOWN_MASK);
     }
 
     //
@@ -213,30 +213,30 @@ private static Action createKeyAction( String name, char key ) {
     //
     for (String key : keypadNameMap.keySet()) {
         checkUseKey(bl, key, keypadNameMap.get(key), 0);
-        checkUseKey(bl, key, keypadNameMap.get(key), CTRL_MASK);
+        checkUseKey(bl, key, keypadNameMap.get(key), CTRL_DOWN_MASK);
         checkUseKey(bl, key, keypadNameMap.get(key), SHIFT_MASK);
     }
 
     //
     // There's always some wierdo's
     //
-    checkUseKey(bl, "Ctrl-[", "Escape", KeyEvent.VK_OPEN_BRACKET, CTRL_MASK);
+    checkUseKey(bl, "Ctrl-[", "Escape", KeyEvent.VK_OPEN_BRACKET, CTRL_DOWN_MASK);
 
     checkUseKey(bl, "Ctrl-]", "CloseBracket",
-                KeyEvent.VK_CLOSE_BRACKET, CTRL_MASK);
+                KeyEvent.VK_CLOSE_BRACKET, CTRL_DOWN_MASK);
 
     // input mode bindings to shift line to align with paren in previous line
     // the ">" must be on period
-    checkUseKey(bl, "Ctrl->", "PeriodCloseAngle", '.', CTRL_MASK);
+    checkUseKey(bl, "Ctrl->", "PeriodCloseAngle", '.', CTRL_DOWN_MASK);
     // the "<" must be on comma
-    checkUseKey(bl, "Ctrl-<", "CommaOpenAngle", ',', CTRL_MASK);
+    checkUseKey(bl, "Ctrl-<", "CommaOpenAngle", ',', CTRL_DOWN_MASK);
 
-    checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_MASK);
-    checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_MASK|SHIFT_MASK);
+    checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_DOWN_MASK);
+    checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_DOWN_MASK|SHIFT_MASK);
 
     // Allow the various flavors of Space
     checkUseKey(bl, "Space", KeyEvent.VK_SPACE, 0);
-    checkUseKey(bl, "Space", KeyEvent.VK_SPACE, CTRL_MASK);
+    checkUseKey(bl, "Space", KeyEvent.VK_SPACE, CTRL_DOWN_MASK);
     checkUseKey(bl, "Space", KeyEvent.VK_SPACE, SHIFT_MASK);
 
     return bl;
@@ -247,7 +247,7 @@ private static Action createKeyAction( String name, char key ) {
       String modTag = "";
       switch(mod) {
           case 0:           modTag = "";        break;
-          case CTRL_MASK:   modTag = "Ctrl-";   break;
+          case CTRL_DOWN_MASK:   modTag = "Ctrl-";   break;
           case SHIFT_MASK:  modTag = "Shift-";  break;
           default: assert(false) : "mod = " + mod + ", not jVi modifier.";
       }
@@ -280,14 +280,14 @@ private static Action createKeyAction( String name, char key ) {
 
     // WHAT ARE THE FOLLOWING TWO FOR?
 
-    //bl.add(createKeyBinding( KeyEvent.VK_CIRCUMFLEX, CTRL_MASK, "ViCtrl-CircumflexKey"));
-    //bl.add(createKeyBinding( KeyEvent.VK_UNDERSCORE, CTRL_MASK, "ViCtrl-UnderscoreKey"));
+    //bl.add(createKeyBinding( KeyEvent.VK_CIRCUMFLEX, CTRL_DOWN_MASK, "ViCtrl-CircumflexKey"));
+    //bl.add(createKeyBinding( KeyEvent.VK_UNDERSCORE, CTRL_DOWN_MASK, "ViCtrl-UnderscoreKey"));
 
 
     bl.add(createKeyBinding(KeyEvent.VK_SPACE, SHIFT_MASK, "ViSpaceKey"));
 
     bl.add(createKeyBinding(KeyEvent.VK_BACK_SPACE, SHIFT_MASK, "ViBack_spaceKey"));
-    bl.add(createKeyBinding(KeyEvent.VK_BACK_SLASH, CTRL_MASK, "ViCtrl-BackslashKey"));
+    bl.add(createKeyBinding(KeyEvent.VK_BACK_SLASH, CTRL_DOWN_MASK, "ViCtrl-BackslashKey"));
     bl.add(createKeyBinding(KeyEvent.VK_TAB, SHIFT_MASK, "ViTabKey"));
     bl.add(createKeyBinding(KeyEvent.VK_ENTER, SHIFT_MASK, "ViEnterKey"));
 
@@ -336,18 +336,18 @@ private static Action createKeyAction( String name, char key ) {
     // Control Function Keys
     //
 
-    bl.add(createKeyBinding(KeyEvent.VK_F1, CTRL_MASK, "ViF1Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F2, CTRL_MASK, "ViF2Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F3, CTRL_MASK, "ViF3Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F4, CTRL_MASK, "ViF4Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F5, CTRL_MASK, "ViF5Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F6, CTRL_MASK, "ViF6Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F7, CTRL_MASK, "ViF7Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F8, CTRL_MASK, "ViF8Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F9, CTRL_MASK, "ViF9Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F10, CTRL_MASK, "ViF10Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F11, CTRL_MASK, "ViF11Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F12, CTRL_MASK, "ViF12Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F1, CTRL_DOWN_MASK, "ViF1Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F2, CTRL_DOWN_MASK, "ViF2Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F3, CTRL_DOWN_MASK, "ViF3Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F4, CTRL_DOWN_MASK, "ViF4Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F5, CTRL_DOWN_MASK, "ViF5Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F6, CTRL_DOWN_MASK, "ViF6Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F7, CTRL_DOWN_MASK, "ViF7Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F8, CTRL_DOWN_MASK, "ViF8Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F9, CTRL_DOWN_MASK, "ViF9Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F10, CTRL_DOWN_MASK, "ViF10Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F11, CTRL_DOWN_MASK, "ViF11Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F12, CTRL_DOWN_MASK, "ViF12Key"));
 
     return bl;
   }
@@ -485,16 +485,16 @@ private static Action createKeyAction( String name, char key ) {
             = new ArrayList<JTextComponent.KeyBinding>();
 
     bl.add(createKeyBinding(
-		   KeyEvent.VK_PERIOD, CTRL_MASK,
+		   KeyEvent.VK_PERIOD, CTRL_DOWN_MASK,
 		   "ViInsert_indentNextParen"));
     bl.add(createKeyBinding(
-		   KeyEvent.VK_COMMA, CTRL_MASK,
+		   KeyEvent.VK_COMMA, CTRL_DOWN_MASK,
 		   "ViInsert_indentPrevParen"));
     bl.add(createKeyBinding(
-		   KeyEvent.VK_T, CTRL_MASK,
+		   KeyEvent.VK_T, CTRL_DOWN_MASK,
 		   "ViInsert_shiftRight"));
     bl.add(createKeyBinding(
-		   KeyEvent.VK_D, CTRL_MASK,
+		   KeyEvent.VK_D, CTRL_DOWN_MASK,
 		   "ViInsert_shiftLeft"));
     bl.add(createKeyBinding(
 		   KeyEvent.VK_INSERT, 0,
