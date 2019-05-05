@@ -4,18 +4,18 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is jvi - vi editor clone.
- * 
+ *
  * The Initial Developer of the Original Code is Ernie Rael.
  * Portions created by Ernie Rael are
  * Copyright (C) 2000 Ernie Rael.  All Rights Reserved.
- * 
+ *
  * Contributor(s): Ernie Rael <err@raelity.com>
  */
 
@@ -311,12 +311,12 @@ public class RegExpFactory {
       "(?e=#)^([+-]?)(#d*)$", "1", null,
       "(?e=#)^([+-]?)(#d*)$", "-1", null,
       "xyz", "abc", null,
-      "#w+", "hello", new Character('#'),
+      "#w+", "hello", '#',
       "([abc]+)([def]+)([ghi]+)?([jkl]+)z*", "xxaaeekkzzzzzzz", null,
       "(?e=#)#s+(#w)+#s", "       how       ", null,
       "(?e=#)#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", null,
       "#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", null,
-      "#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", new Character('#')
+      "#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", '#'
     };
 
     test1("com.raelity.text.RegExpJava", testInput);
