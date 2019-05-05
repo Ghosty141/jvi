@@ -49,7 +49,7 @@ import com.raelity.jvi.ViInitialization;
 import com.raelity.jvi.manager.ViManager;
 
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
-import static java.awt.event.InputEvent.SHIFT_MASK;
+import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;
 
 import static com.raelity.jvi.core.lib.Constants.*;
 import static com.raelity.jvi.core.lib.KeyDefs.*;
@@ -214,7 +214,7 @@ private static Action createKeyAction( String name, char key ) {
     for (String key : keypadNameMap.keySet()) {
         checkUseKey(bl, key, keypadNameMap.get(key), 0);
         checkUseKey(bl, key, keypadNameMap.get(key), CTRL_DOWN_MASK);
-        checkUseKey(bl, key, keypadNameMap.get(key), SHIFT_MASK);
+        checkUseKey(bl, key, keypadNameMap.get(key), SHIFT_DOWN_MASK);
     }
 
     //
@@ -232,12 +232,12 @@ private static Action createKeyAction( String name, char key ) {
     checkUseKey(bl, "Ctrl-<", "CommaOpenAngle", ',', CTRL_DOWN_MASK);
 
     checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_DOWN_MASK);
-    checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_DOWN_MASK|SHIFT_MASK);
+    checkUseKey(bl, "Ctrl-@",  "Ctrl-@", KeyEvent.VK_2, CTRL_DOWN_MASK|SHIFT_DOWN_MASK);
 
     // Allow the various flavors of Space
     checkUseKey(bl, "Space", KeyEvent.VK_SPACE, 0);
     checkUseKey(bl, "Space", KeyEvent.VK_SPACE, CTRL_DOWN_MASK);
-    checkUseKey(bl, "Space", KeyEvent.VK_SPACE, SHIFT_MASK);
+    checkUseKey(bl, "Space", KeyEvent.VK_SPACE, SHIFT_DOWN_MASK);
 
     return bl;
   }
@@ -248,7 +248,7 @@ private static Action createKeyAction( String name, char key ) {
       switch(mod) {
           case 0:           modTag = "";        break;
           case CTRL_DOWN_MASK:   modTag = "Ctrl-";   break;
-          case SHIFT_MASK:  modTag = "Shift-";  break;
+          case SHIFT_DOWN_MASK:  modTag = "Shift-";  break;
           default: assert(false) : "mod = " + mod + ", not jVi modifier.";
       }
       String prefName = modTag + key; // like: "Ctrl-PageUp"
@@ -284,12 +284,12 @@ private static Action createKeyAction( String name, char key ) {
     //bl.add(createKeyBinding( KeyEvent.VK_UNDERSCORE, CTRL_DOWN_MASK, "ViCtrl-UnderscoreKey"));
 
 
-    bl.add(createKeyBinding(KeyEvent.VK_SPACE, SHIFT_MASK, "ViSpaceKey"));
+    bl.add(createKeyBinding(KeyEvent.VK_SPACE, SHIFT_DOWN_MASK, "ViSpaceKey"));
 
-    bl.add(createKeyBinding(KeyEvent.VK_BACK_SPACE, SHIFT_MASK, "ViBack_spaceKey"));
+    bl.add(createKeyBinding(KeyEvent.VK_BACK_SPACE, SHIFT_DOWN_MASK, "ViBack_spaceKey"));
     bl.add(createKeyBinding(KeyEvent.VK_BACK_SLASH, CTRL_DOWN_MASK, "ViCtrl-BackslashKey"));
-    bl.add(createKeyBinding(KeyEvent.VK_TAB, SHIFT_MASK, "ViTabKey"));
-    bl.add(createKeyBinding(KeyEvent.VK_ENTER, SHIFT_MASK, "ViEnterKey"));
+    bl.add(createKeyBinding(KeyEvent.VK_TAB, SHIFT_DOWN_MASK, "ViTabKey"));
+    bl.add(createKeyBinding(KeyEvent.VK_ENTER, SHIFT_DOWN_MASK, "ViEnterKey"));
 
     return bl;
   }
@@ -319,18 +319,18 @@ private static Action createKeyAction( String name, char key ) {
     // Shifted Function Keys
     //
 
-    bl.add(createKeyBinding(KeyEvent.VK_F1, SHIFT_MASK, "ViF1Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F2, SHIFT_MASK, "ViF2Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F3, SHIFT_MASK, "ViF3Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F4, SHIFT_MASK, "ViF4Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F5, SHIFT_MASK, "ViF5Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F6, SHIFT_MASK, "ViF6Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F7, SHIFT_MASK, "ViF7Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F8, SHIFT_MASK, "ViF8Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F9, SHIFT_MASK, "ViF9Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F10, SHIFT_MASK, "ViF10Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F11, SHIFT_MASK, "ViF11Key"));
-    bl.add(createKeyBinding(KeyEvent.VK_F12, SHIFT_MASK, "ViF12Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F1, SHIFT_DOWN_MASK, "ViF1Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F2, SHIFT_DOWN_MASK, "ViF2Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F3, SHIFT_DOWN_MASK, "ViF3Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F4, SHIFT_DOWN_MASK, "ViF4Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F5, SHIFT_DOWN_MASK, "ViF5Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F6, SHIFT_DOWN_MASK, "ViF6Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F7, SHIFT_DOWN_MASK, "ViF7Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F8, SHIFT_DOWN_MASK, "ViF8Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F9, SHIFT_DOWN_MASK, "ViF9Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F10, SHIFT_DOWN_MASK, "ViF10Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F11, SHIFT_DOWN_MASK, "ViF11Key"));
+    bl.add(createKeyBinding(KeyEvent.VK_F12, SHIFT_DOWN_MASK, "ViF12Key"));
 
     //
     // Control Function Keys
