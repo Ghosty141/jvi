@@ -61,9 +61,6 @@ public class CcBang
 {
 private static final Logger LOG = Logger.getLogger(CcBang.class.getName());
 
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=10)
     public static class Init implements ViInitialization
     {
         @Override

@@ -92,9 +92,7 @@ public enum AppViews
     private static ViAppView keepMru;
 
     private static boolean didInit;
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=10)
+
     public static class Init implements ViInitialization
     {
         @Override

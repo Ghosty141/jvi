@@ -3,18 +3,18 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is jvi - vi editor clone.
- * 
+ *
  * The Initial Developer of the Original Code is Ernie Rael.
  * Portions created by Ernie Rael are
  * Copyright (C) 2000 Ernie Rael.  All Rights Reserved.
- * 
+ *
  * Contributor(s): Ernie Rael <err@raelity.com>
  */
 package com.raelity.jvi.core;
@@ -77,9 +77,6 @@ public final class Options {
         public void cancel();
     }
 
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=2)
     public static class Init implements ViInitialization
     {
       @Override
@@ -97,7 +94,7 @@ public final class Options {
         GetChar.reinitMappings();
       }
     }
-  
+
   static Options getOptions() {
       if(options == null) {
           options = new Options();
@@ -111,7 +108,7 @@ public final class Options {
    */
   public enum Category { PLATFORM, GENERAL, MODIFY, SEARCH, CURSOR_WRAP,
                          PROCESS, DEBUG }
-  
+
   public static final String commandEntryFrame = "viCommandEntryFrameOption";
   public static final String redoTrack = "viRedoTrack";
   public static final String pcmarkTrack = "viPCMarkTrack";
@@ -155,7 +152,7 @@ public final class Options {
   public static final String ignoreCase = "viIgnoreCase";
   public static final String smartCase = "viSmartCase";
   public static final String platformBraceMatch = "viPlatformBraceMatch";
-  
+
   public static final String expandTabs = "viExpandTabs";
 
   public static final String report = "viReport";
@@ -188,10 +185,10 @@ public final class Options {
   public static final String nrFormats = "viNrFormats";
   public static final String matchPairs = "viMatchPairs";
   public static final String quoteEscape = "viQuoteEscape";
-  
+
   public static final String modeline = "viModeline";
   public static final String modelines = "viModelines";
-  
+
   public static final String selection = "viSelection";
   public static final String selectMode = "viSelectMode";
   public static final String selectColor = "viSelectColor";
@@ -211,11 +208,11 @@ public final class Options {
   public static final String mapCommands = "viMapCommands";
 
   public static final String persistedBufMarks = "viPersistedBufMarks";
-  
+
   public static final String readOnlyHack = "viReadOnlyHack";
   public static final String classicUndoOption = "viClassicUndo";
   public static final String hideVersionOption = "viHideVersion";
-  
+
   public static final String dbgRedo = "viDbgRedo";
   public static final String dbgKeyStrokes = "viDbgKeyStrokes";
   public static final String dbgCache = "viDbgCache";
@@ -247,7 +244,7 @@ public final class Options {
 
     G.dbgOptions = OptUtil.createDebugOption(dbgOptions);
     OptUtil.setupOptionDesc(Category.DEBUG, dbgOptions, "debug options set", "");
-    
+
     // Some options that do not appear in the dialog property sheets.
 
     OptUtil.createIntegerOption(scroll, 0);
@@ -361,14 +358,14 @@ public final class Options {
 
     G.dbgFonts = OptUtil.createDebugOption(dbgFonts);
     OptUtil.setupOptionDesc(Category.DEBUG, dbgFonts, "debug font issues", "");
-    
+
     /////////////////////////////////////////////////////////////////////
     //
     //
     // Platform Options
     //
     //
-    
+
     // platformList.add("jViVersion"); // hard coded in OptUtil.init
 
     OptUtil.createBooleanOption(redoTrack, true);
@@ -394,7 +391,7 @@ public final class Options {
             "The color used for search highlight foreground."
                     + " If 'null' then use editor's foreground color");
     setExpertHidden(searchFgColor, false, false);
-    
+
     OptUtil.createColorOption(selectColor, new Color(0xffe588), false); //a light orange
     OptUtil.setupOptionDesc(Category.PLATFORM, selectColor, "'hl-visual' color",
             "The color used for a visual mode selection.");
@@ -410,26 +407,26 @@ public final class Options {
     OptUtil.setupOptionDesc(Category.PLATFORM, roCursorColor, "'rocursorcolor' 'rocc'",
             "The cursor color in a read only editor."
                     + " If 'null' then use editor's default cursor color");
-    
+
     OptUtil.createBooleanOption(hideVersionOption, false);
     OptUtil.setupOptionDesc(Category.PLATFORM, hideVersionOption, "hide version",
                     "When true, display of initial version information"
                     + " does not bring up output window.");
     setExpertHidden(hideVersionOption, true, false);
-    
+
     OptUtil.createBooleanOption(commandEntryFrame , true);
     OptUtil.setupOptionDesc(Category.PLATFORM, commandEntryFrame, "use modal frame",
                "Use modal frame for command/search entry."
                + " Change takes affect after restart.");
     setExpertHidden(commandEntryFrame, true, false);
-    
+
     OptUtil.createBooleanOption(autoPopupFN, true);
     OptUtil.setupOptionDesc(Category.PLATFORM, autoPopupFN,
                             "\":e#\" Completion Auto Popup",
                "When doing \":\" command line entry, if \"e#\" is"
                + " entered then automatically popup a file"
                + " name completion window.");
-    
+
     OptUtil.createBooleanOption(autoPopupCcName, true);
     OptUtil.setupOptionDesc(Category.PLATFORM, autoPopupCcName,
                             "\":\" Command Completion Auto Popup",
@@ -567,11 +564,11 @@ public final class Options {
             "The minimal number of screen columns to keep to the left and"
             + "to the right of the cursor if 'nowrap' is set.");
     setExpertHidden(sideScrollOff, false, true);
-    
+
     OptUtil.createBooleanOption(showMode, true);
     OptUtil.setupOptionDesc(Category.GENERAL, showMode, "'showmode' 'smd'",
             "If in Insert or Replace mode display that information.");
-    
+
     OptUtil.createBooleanOption(showCommand, true);
     OptUtil.setupOptionDesc(Category.GENERAL, showCommand, "'showcmd' 'sc'",
             "Show (partial) command in status line.");
@@ -583,7 +580,7 @@ public final class Options {
             + " be given for most \":\" commands.  If you want it always, set"
             + " 'report' to 0.  For the \":substitute\" command the number of"
             + " substitutions is used instead of the number of lines.");
-    
+
     OptUtil.createBooleanOption(modeline, true);
     OptUtil.setupOptionDesc(Category.GENERAL, modeline, "'modeline' 'ml'",
             "Enable/disable modelines option."
@@ -591,7 +588,7 @@ public final class Options {
             + "\n\u00a0\u00a0\u00a0\u00a0example: vi:noai:sw=3 ts=6"
             + "\n[text]{white}{vi:|vim:|ex:}[white]se[t] {options}:[text]"
             + "\n\u00a0\u00a0\u00a0\u00a0example: /* vim: set ai tw=75: */");
-    
+
     OptUtil.createIntegerOption(modelines, 5);
     OptUtil.setupOptionDesc(Category.GENERAL, modelines, "'modelines' 'mls'",
 	    " If 'modeline' is on 'modelines' gives the number of lines"
@@ -630,7 +627,7 @@ public final class Options {
             + " It is only used in Visual and Select mode."
             + "Possible values: 'old', 'inclusive', 'exclusive'");
     setExpertHidden(selection, false, false);
-    
+
     OptUtil.createEnumStringOption(selectMode, "",
             new String[] {"mouse", "key", "cmd"});
     OptUtil.setupOptionDesc(Category.GENERAL, selectMode, "'selectmode' 'slm'",
@@ -736,7 +733,7 @@ public final class Options {
     //
     // per buffer options are accessed through curbuf.
     //
-    
+
     /*G.b_p_et = */OptUtil.createBooleanOption(expandTabs, false);
     OptUtil.setupOptionDesc(Category.MODIFY, expandTabs, "'expandtab' 'et'",
            "In Insert mode: Use the appropriate number of spaces to"
@@ -778,7 +775,7 @@ public final class Options {
             + " 'CTRL-A' and 'CTRL-X' commands for adding to and subtracting"
             + " from a number respectively. Value is comma separated list;"
             + " 'octal,hex,alpha' is all possible values.");
-    
+
     /////////////////////////////////////////////////////////////////////
     //
     //
@@ -793,7 +790,7 @@ public final class Options {
             + " or abort then the screen returns to its original location."
             + " You still need to finish the search with"
             + " <ENTER> or abort it with <ESC>.");
-    
+
     OptUtil.createBooleanOption(highlightSearch, true);
     OptUtil.setupOptionDesc(Category.SEARCH, highlightSearch, "'hlsearch' 'hls'",
                     "When there is a previous search pattern, highlight"
@@ -802,7 +799,7 @@ public final class Options {
     OptUtil.createBooleanOption(ignoreCase, false);
     OptUtil.setupOptionDesc(Category.SEARCH, ignoreCase, "'ignorecase' 'ic'",
             "Ignore case in search patterns.");
-    
+
     OptUtil.createBooleanOption(smartCase, false);
     OptUtil.setupOptionDesc(Category.SEARCH, smartCase, "'smartcase' 'scs'",
             "Override the 'ignorecase' option if the search pattern"
@@ -827,7 +824,7 @@ public final class Options {
 		  "Use the platform/IDE for brace matching"
                   + " and match highlighting. This may enable additional"
                   + " match characters, words and features.");
-    
+
     OptUtil.createBooleanOption(metaEquals, true);
     OptUtil.setupOptionDesc(Category.SEARCH, metaEquals, "'reMetaEquals' 'req'",
             "In a regular expression allow"
@@ -968,13 +965,13 @@ public final class Options {
             "Quoting character(s), put around the commands passed to the " +
             "shell, for the \"!\" and \":!\" commands (default: \"\"; for " +
             "Win32, when 'shell' contains \"sh\" somewhere: \"\\\"\").");
-    
+
     OptUtil.createBooleanOption(shellSlash, false);
     OptUtil.setupOptionDesc(Category.PROCESS, shellSlash, "'shellslash' 'ssl'",
             "When set, a forward slash is used when expanding file names." +
             "This is useful when a Unix-like shell is used instead of " +
             "command.com or cmd.exe.");
-    
+
     OptUtil.createStringOption(equalProgram, "");
     OptUtil.setupOptionDesc(Category.PROCESS, equalProgram, "'equalprg' 'ep'",
             "External program to use for \"=\" command (default \"\").  " +
@@ -1034,12 +1031,12 @@ public final class Options {
                                       boolean fExpert, boolean fHidden) {
     OptUtil.setExpertHidden(optionName, fExpert, fHidden);
   }
-  
+
   //
   // Look like a good bean
   // But they're static!
   //
-  
+
   public static void addPropertyChangeListener( PropertyChangeListener listener )
   {
     pcs.addPropertyChangeListener( listener );
@@ -1049,7 +1046,7 @@ public final class Options {
   {
     pcs.removePropertyChangeListener( listener );
   }
-  
+
   public static void addPropertyChangeListener(String p,
                                                PropertyChangeListener l)
   {
@@ -1061,7 +1058,7 @@ public final class Options {
   {
     pcs.removePropertyChangeListener(p, l);
   }
-  
+
   private static Pattern mlPat1;
   private static Pattern mlPat2;
   public static void processModelines() {
@@ -1079,26 +1076,26 @@ public final class Options {
       if(checkModeline(lnum))
         mls = 0;
     }
-    
+
     for(lnum = lcount; lnum > 0 && lnum > mls && lnum > lcount - mls; lnum--) {
       if(checkModeline(lnum))
         mls = 0;
     }
   }
-  
+
   /** @return true if parsed a modeline, there may have been errors */
   private static boolean checkModeline(int lnum) {
     // use MySegment for jdk1.5 compatibility
     MySegment seg = Util.ml_get(lnum);
-    
+
     // must check pattern 2 first, since lines that match pattern 2
     // will also match pattern 1
-    
+
     if(parseModeline(mlPat2, seg, lnum))
       return true;
     return parseModeline(mlPat1, seg, lnum);
   }
-  
+
   /** @return true if found and parsed a modeline, there may have been errors */
   private static boolean parseModeline(Pattern p, CharSequence cs, int lnum) {
     Matcher m = p.matcher(cs);
@@ -1138,12 +1135,12 @@ public final class Options {
     }
     return true;
   }
-  
+
   //////////////////////////////////////////////////////////////////////
   //
   // can_bs is in option in vim
   //
-  
+
   static boolean can_bs(char what) {
     switch(G.p_bs) {
       case 2:     return true;
@@ -1153,15 +1150,15 @@ public final class Options {
     assert(false) : "can_bs: ; p_bs bad value";
     return false;
   }
-  
-  
+
+
   //////////////////////////////////////////////////////////////////////
   //
   // Whether or not to highlight depends on a mix of things.
   // Handle the logic here.
-  
+
   static boolean nohDisableHighlight;
-  
+
   static {
     addPropertyChangeListener(highlightSearch, new PropertyChangeListener() {
       @Override
@@ -1182,16 +1179,16 @@ public final class Options {
       }
     });
   }
-  
+
   public static boolean doHighlightSearch() {
     return G.p_hls && !nohDisableHighlight;
   }
-  
+
   static void nohCommand() {
     nohDisableHighlight = true;
     ViManager.updateHighlightSearchState();
   }
-  
+
   static void newSearch() {
     nohDisableHighlight = false;
     ViManager.updateHighlightSearchState();

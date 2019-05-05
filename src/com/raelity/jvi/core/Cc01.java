@@ -74,9 +74,6 @@ public class Cc01
 {
     private static final Logger LOG = Logger.getLogger(Cc01.class.getName());
 
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=10)
     public static class Init implements ViInitialization
     {
         @Override
@@ -268,7 +265,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.BANG);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev)
         {
@@ -282,7 +279,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.BANG);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev)
         {
@@ -452,7 +449,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.NO_PARSE, CcFlag.RANGE);
         }
-        
+
         @Override
         public void actionPerformed(final ActionEvent ev)
         {
@@ -471,7 +468,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.NO_PARSE, CcFlag.RANGE, CcFlag.BANG);
         }
-        
+
         @Override
         public void actionPerformed(final ActionEvent ev) {
             Misc.runUndoable(new Runnable() {
@@ -490,7 +487,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.NO_PARSE, CcFlag.RANGE);
         }
-        
+
         @Override
         public void actionPerformed(final ActionEvent ev) {
             Misc.runUndoable(new Runnable() {
@@ -561,7 +558,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.HIDE, CcFlag.NO_ARGS);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev) {
         }
@@ -576,7 +573,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.RANGE);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev)
         {
@@ -605,7 +602,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.NO_ARGS, CcFlag.RANGE);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev)
         {
@@ -627,7 +624,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.RANGE);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev) {
             ColonEvent ce = (ColonEvent)ev;
@@ -702,7 +699,7 @@ public class Cc01
         {
             return EnumSet.of(CcFlag.RANGE);
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent ev)
         {
@@ -943,7 +940,7 @@ private static void addDebugColonCommands()
             @Override
             public void actionPerformed(ActionEvent ev) {
                 ColonEvent cev = (ColonEvent) ev;
-                
+
                 if(cev.getNArg() != 1) {
                     Msg.emsg("optionDelete takes exactly one argument");
                     return;
@@ -982,7 +979,7 @@ private static void addDebugColonCommands()
             {
                 return EnumSet.of(CcFlag.NO_ARGS);
             }
-                
+
             @Override
                 public void actionPerformed(ActionEvent ev) {
                     Msg.emsg("***** executing !isEnabled command *****");
