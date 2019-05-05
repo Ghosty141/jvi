@@ -21,6 +21,7 @@
 
 package com.raelity.text;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,27 +136,30 @@ public class RegExpFactory {
       initFactory();
 
       if (reClass == null) {
-	throw new NoClassDefFoundError("Can not find a RegExp handler.");
+        throw new NoClassDefFoundError("Can not find a RegExp handler.");
       }
     }
 
     RegExp regexp;
 
     try {
-      regexp = (RegExp) reClass.newInstance();
+      regexp = (RegExp) reClass.getDeclaredConstructor().newInstance();
 
       if (compflag) {
-	regexp.compile(pattern);
+        regexp.compile(pattern);
       }
     } catch (IllegalAccessException e) {
       throw new NoClassDefFoundError("IllegalAccessException really.");
     } catch (InstantiationException e) {
       throw new NoClassDefFoundError("InstantiationException really.");
+    } catch (NoSuchMethodException e) {
+      throw new NoClassDefFoundError("NoSuchMethodException really.");
+    } catch (SecurityException e) {
+      throw new NoClassDefFoundError("NoClassDefFoundError really.");
+    } catch (InvocationTargetException e) {
+      throw new NoClassDefFoundError("InvocationTargetException really.");
     }
 
-    // catch(NoSuchMethodException e) {
-    // throw new NoClassDefFoundError("NoSuchMethodException really.");
-    // }
     return regexp;
   }
 
