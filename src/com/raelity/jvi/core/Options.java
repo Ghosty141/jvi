@@ -169,6 +169,7 @@ public final class Options {
   public static final String visualBell = "viVisualBell";
   public static final String visualBellTime = "viVisualBellTime";
   public static final String visualBellColor = "viVisualBellColor";
+  public static final String auditoryBell = "viAuditoryBell";
 
   public static final String wrap = "viWrap";
   public static final String list = "viList";
@@ -540,6 +541,12 @@ public final class Options {
                     + " is set to this color."
                     + " If null, then the editor's background color"
                     + " is inverted");
+
+    OptUtil.createBooleanOption(auditoryBell, true);
+    OptUtil.setupOptionDesc(Category.GENERAL, auditoryBell,
+            "'auditoryBell' 'ab'",
+            "When the visual bell is turned off, a sound will be played"
+            + " instead, if this checkbox is checked");
 
     OptUtil.createIntegerOption(scrollOff, 0);
     OptUtil.setupOptionDesc(Category.GENERAL, scrollOff, "'scrolloff' 'so'",

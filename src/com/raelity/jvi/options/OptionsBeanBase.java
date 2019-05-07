@@ -70,13 +70,13 @@ implements Options.EditControl {
     private final Options.Category category;
     private final List<String> optionsList;
     private final String displayName;
-    
+
     private final PropertyChangeSupport pcs = new PropertyChangeSupport( this );
-    private final VetoableChangeSupport vcs = new VetoableChangeSupport( this ); 
+    private final VetoableChangeSupport vcs = new VetoableChangeSupport( this );
     //private static String checkme = "Search Options";
 
     private final Map<String,Object> changeMap = new HashMap<String,Object>();
-    
+
     /** Creates a new instance of OptionsBeanBase */
     public OptionsBeanBase(Class clazz, String displayName,
                            Options.Category category) {
@@ -120,7 +120,7 @@ implements Options.EditControl {
             }
         }
     }
-    
+
     @Override
     public BeanDescriptor getBeanDescriptor() {
         return new ThisBeanDescriptor();
@@ -211,7 +211,7 @@ implements Options.EditControl {
         }
         return d;
     }
-    
+
     /* This doesn't work. wonder why?
     public static Image getJViLogo(int type) {
         if (type == BeanInfo.ICON_COLOR_16x16
@@ -228,7 +228,7 @@ implements Options.EditControl {
         }
     }
      */
-    
+
     private static Image icon, icon32;
     @Override
     public Image getIcon (int type) {
@@ -243,22 +243,22 @@ implements Options.EditControl {
             return icon32;
         }
     }
-    
+
     private class ThisBeanDescriptor extends BeanDescriptor {
         ThisBeanDescriptor() {
             super(clazz);
         }
-        
+
         @Override
         public String getDisplayName() {
 	    return displayName;
         }
     }
-    
+
     //
     // Look like a good bean
     //
-    
+
     public void addPropertyChangeListener( PropertyChangeListener listener )
     {
         this.pcs.addPropertyChangeListener( listener );
@@ -268,7 +268,7 @@ implements Options.EditControl {
     {
         this.pcs.removePropertyChangeListener( listener );
     }
-    
+
     public void addVetoableChangeListener( VetoableChangeListener listener )
     {
         this.vcs.addVetoableChangeListener( listener );
@@ -277,8 +277,8 @@ implements Options.EditControl {
     public void removeVetoableChangeListener( VetoableChangeListener listener )
     {
         this.vcs.addVetoableChangeListener( listener );
-    } 
-    
+    }
+
     //
     //      The interface to preferences.
     //
@@ -403,12 +403,12 @@ implements Options.EditControl {
 	Option opt = Options.getOption(name);
 	return opt.getBoolean();
     }
-    
+
     //
     // All the known options
     //      The bean getter/setter
     //
-    
+
     /** this read-only option is special cased */
     public String getJViVersion() {
         return ViManager.getReleaseString();
@@ -416,6 +416,14 @@ implements Options.EditControl {
 
     public void setViVisualBellColor(Color arg)  throws PropertyVetoException {
         put(Options.visualBellColor, arg);
+    }
+
+    public void setViAuditoryBell(boolean arg) throws PropertyVetoException {
+        put(Options.auditoryBell, arg);
+    }
+
+    public boolean getViAuditoryBell() {
+        return getboolean(Options.auditoryBell);
     }
 
     public Color getViVisualBellColor() {
@@ -669,7 +677,7 @@ implements Options.EditControl {
     public boolean getViShellSlash() {
         return getboolean(Options.shellSlash);
     }
-    
+
     public void setViEqualProgram(String arg)  throws PropertyVetoException {
         put(Options.equalProgram, arg);
     }
@@ -1087,7 +1095,7 @@ implements Options.EditControl {
     public boolean getViClassicUndo() {
 	return getboolean("viClassicUndo");
     }
-    
+
     public void setViHideVersion(boolean arg) {
         put(Options.hideVersionOption, arg);
     }
