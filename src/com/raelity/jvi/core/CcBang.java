@@ -336,7 +336,7 @@ public static class BangAction extends AbstractColonAction
                 public void keyTyped(KeyEvent e) {
                     e.consume();
                     if(e.getKeyChar() == (KeyEvent.VK_C & 0x1f)
-                        && (e.getModifiers() & KeyEvent.CTRL_DOWN_MASK) != 0) {
+                        && (e.getModifiersEx() & KeyEvent.CTRL_DOWN_MASK) != 0) {
                         finishBangCommand(false);
                     } else {
                         Util.beep_flush();
