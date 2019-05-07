@@ -832,7 +832,7 @@ public class SwingTextView extends TextView
             Point pt = null;
             if(!w_p_wrap) {
                 // y position is the same for everything
-                r = ep.modelToView(fpos.getOffset());
+                r = ep.modelToView2D(fpos.getOffset()).getBounds();
                 // and put x at the viewport edge
                 pt = new Point(viewport.getViewPosition().x, r.y + r.height/2);
             }
@@ -855,7 +855,7 @@ public class SwingTextView extends TextView
                         pt.x += viewport.getExtentSize().width
                                         - (int)getMaxCharWidth();
                         offset = ep.viewToModel(pt);
-                        r = ep.modelToView(offset);
+                        r = ep.modelToView2D(offset).getBounds();
                         if(r.width == 0)
                             // these things usually come back as zero,
                             // I guess the offset is the position between chars
@@ -921,7 +921,7 @@ public class SwingTextView extends TextView
             if(HSCROLL.HALF == op) {
                 count = (int)((viewportExtent.width / getMaxCharWidth())/2);
             } else if(HSCROLL.CURSOR == op) {
-                cRect = ep.modelToView(fpos.getOffset());
+                cRect = ep.modelToView2D(fpos.getOffset()).getBounds();
                 cRect.width = (int)getMaxCharWidth();
                 if(HDIR.LEFT == hdir) {
                     count = (int)((viewportPosition.x + viewportExtent.width
@@ -948,7 +948,7 @@ public class SwingTextView extends TextView
 
             viewport.setViewPosition(pt);
             // make sure the cursor is visible
-            cRect = ep.modelToView(fpos.getOffset());
+            cRect = ep.modelToView2D(fpos.getOffset()).getBounds();
             cRect.width = (int)getMaxCharWidth();
             Rectangle vRect = viewport.getViewRect();
             if(!vRect.contains(cRect)) {

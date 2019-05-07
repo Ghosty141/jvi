@@ -31,6 +31,7 @@ import javax.swing.text.JTextComponent;
 import com.raelity.jvi.ViCaret;
 import com.raelity.jvi.ViCaretStyle;
 import com.raelity.jvi.core.G;
+import javax.swing.text.Position;
 
 /**
  * This handles the VI behavior of a caret, drawing the caret is
@@ -108,8 +109,8 @@ public class SwingPaintCaret
             FontMetrics fm = g.getFontMetrics();	// NEEDSWORK: should be cached
             blockWidth = fm.charWidth('.');		// assume all the same width
             try {
-                Rectangle r = component.getUI().modelToView(
-                        component, dot);
+                Rectangle r = component.getUI().modelToView2D(
+                        component, dot, Position.Bias.Forward).getBounds();
                 Rectangle r00 = null;
                 char c = 0;
                 int cursorShape = ViCaretStyle.SHAPE_BLOCK;

@@ -86,7 +86,7 @@ public class FreezeViewport implements DocumentListener, ChangeListener
     {
         // Might be able to use info from DocumentEvent to optimize
         try {
-            Point pt = ep.modelToView(offset).getLocation();
+            Point pt = ep.modelToView2D(offset).getBounds().getLocation();
             pt.translate(-pt.x, 0); // x <-- 0, leave a few pixels to left
             vp.setViewPosition(pt);
         } catch (Exception ex) {
