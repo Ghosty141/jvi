@@ -3,18 +3,18 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is jvi - vi editor clone.
- * 
+ *
  * The Initial Developer of the Original Code is Ernie Rael.
  * Portions created by Ernie Rael are
  * Copyright (C) 2000 Ernie Rael.  All Rights Reserved.
- * 
+ *
  * Contributor(s): Ernie Rael <err@raelity.com>
  */
 package com.raelity.jvi.core;
@@ -98,9 +98,6 @@ public class Misc implements ClipboardOwner {
     // "misc1.c"
     //
 
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=10)
     public static class Init implements ViInitialization
     {
         @Override
@@ -198,7 +195,7 @@ public class Misc implements ClipboardOwner {
       }
       return count;
   }
-  
+
   /**
    * Return column position of parenthesis on argument line.
    * If no paren then return -1.
@@ -214,7 +211,7 @@ public class Misc implements ClipboardOwner {
     MySegment seg = G.curbuf.getLineSegment(lnum);
     return findParen(seg, fromIndent, dir);
   }
-  
+
   /**
    * @param seg
    * @param fromIndent start looking from this position
@@ -224,7 +221,7 @@ public class Misc implements ClipboardOwner {
     boolean found = false;
     int	    count = 0;
     int     prev_paren = -1;
-    
+
     if(dir == BACKWARD) {
       fromIndent -= 1;
     }
@@ -245,12 +242,12 @@ public class Misc implements ClipboardOwner {
 	++count;
       }
     }
-    
+
     // if looking backward, then we're done. prev_paren is position
     if(dir == BACKWARD) {
       return prev_paren;
     }
-    
+
     // ptr = seg.offset;
     //ptr++;
     for ( ; ptr < seg.offset + seg.count; ++ptr) {
@@ -264,7 +261,7 @@ public class Misc implements ClipboardOwner {
     }
     return found ? count : -1;
   }
-  
+
   static int findFirstNonBlank(int lnum, int fromIndent, int dir) {
     if(lnum < 1 || lnum > G.curbuf.getLineCount()) {
       return -1;
@@ -272,7 +269,7 @@ public class Misc implements ClipboardOwner {
     MySegment seg = G.curbuf.getLineSegment(lnum);
     return findFirstNonBlank(seg, fromIndent, dir);
   }
-  
+
   /**
    * @param seg
    * @param fromIndent start looking from this position
@@ -282,7 +279,7 @@ public class Misc implements ClipboardOwner {
     boolean found = false;
     int	    count = 0;
     int     non_blank = -1;
-    
+
     if(dir == BACKWARD) {
       fromIndent -= 1;
     }
@@ -303,12 +300,12 @@ public class Misc implements ClipboardOwner {
 	++count;
       }
     }
-    
+
     // if looking backward, then we're done.
     if(dir == BACKWARD) {
       return non_blank;
     }
-    
+
     for ( ; ptr < seg.offset + seg.count; ++ptr) {
       if(seg.array[ptr] != ' ' && seg.array[ptr] != TAB) {
 	found = true;
@@ -320,7 +317,7 @@ public class Misc implements ClipboardOwner {
 	++count;
     }
     return found ? count : -1;
-    
+
     /*
     if(non_blank < fromIndent)
         return -1;
@@ -809,7 +806,7 @@ public class Misc implements ClipboardOwner {
     }
     return rc;
   }
-  
+
   /**
    * dec_cursor()
    *<p>
@@ -1397,7 +1394,7 @@ public class Misc implements ClipboardOwner {
         y_size = lines;
 
         y_width--;  // WISH I NEW WHY THIS IS NEEDED, see vim's str_to_reg
-        
+
         //y_array[0] = new StringBuffer(s);
       } else {
         y_width = 0;
@@ -1414,7 +1411,7 @@ public class Misc implements ClipboardOwner {
           y_type = MCHAR;
           y_size = 1;
         }
-        
+
         y_array[0] = new StringBuilder(s);
       }
     }
@@ -2232,7 +2229,7 @@ private static int put_in_typebuf(String s, boolean colon)
 
     if(opStartPos == null)
       opStartPos = oap.start;
-              
+
     G.curbuf.b_op_end.setMark(opEndPos);
     G.curbuf.b_op_start.setMark(opStartPos);
     return true;
@@ -2240,7 +2237,7 @@ private static int put_in_typebuf(String s, boolean colon)
 
   /**
    * block mode delete
-   * 
+   *
    * This was inside an if block in op_delete.
    * Pull it out to clarify swap algorithm
    */
@@ -2412,7 +2409,7 @@ private static int put_in_typebuf(String s, boolean colon)
 
     return isValid;
   }
-    
+
   public static int op_replace(final OPARG oap, final char c) {
     final MutableInt rval = new MutableInt();
     Misc.runUndoable(new Runnable() {
@@ -2423,17 +2420,17 @@ private static int put_in_typebuf(String s, boolean colon)
     });
     return rval.getValue();
   }
-    
+
   public static int op_replace7(OPARG oap, char c)
   {
     // Note use an fpos instead of the cursor,
     // This should avoid jitter on the screen
-    
+
     if(/* (curbuf.b_ml.ml_flags & ML_EMPTY ) || */ oap.empty)
       return OK;	    // nothing to do
-    
+
     //#ifdef MULTI_BYTE ... #endif
-    
+
     if (oap.block_mode) {
       block_replace(oap, c);
     } else {
@@ -2451,28 +2448,28 @@ private static int put_in_typebuf(String s, boolean colon)
         oap.end.setColumn(col);
       } else if (!oap.inclusive)
         dec(oap.end);
-      
+
       while(fpos.compareTo(oap.end) <= 0) {
         if (gchar_pos(fpos) != '\n') {
           // #ifdef FEAT_MBYTE ... #endif
           pchar(fpos, c);
         }
-        
+
         // Advance to next character, stop at the end of the file.
         if (inc(fpos) == -1)
           break;
       }
     }
-    
+
     G.curwin.w_cursor.set(oap.start);
     adjust_cursor();
-    
+
     oap.line_count = 0;	    // no lines deleted
-    
+
     // Set "'[" and "']" marks.
     G.curbuf.b_op_start.setMark(oap.start);
     G.curbuf.b_op_end.setMark(oap.end);
-    
+
     return OK;
   }
 
@@ -2668,7 +2665,7 @@ private static int put_in_typebuf(String s, boolean colon)
             break;
         }
       }
-      
+
     } else {				    // not block mode
       if (oap.motion_type == MLINE) {
         pos.setColumn(0);      // this is start
@@ -2793,11 +2790,11 @@ private static int put_in_typebuf(String s, boolean colon)
     }
     if (!op_delete(oap))
       return;
-    
+
     final ViFPOS cursor = G.curwin.w_cursor;
     if ((l > cursor.getColumn()) && !Util.lineempty(cursor.getLine())) //&& !virtual_op
       inc_cursor();
-    
+
     // check for still on same line (<CR> in inserted text meaningless)
     ///skip blank lines too
     if (oap.block_mode) {
@@ -2808,7 +2805,7 @@ private static int put_in_typebuf(String s, boolean colon)
       stateOpSplit.pre_textlen = Util.lineLength(oap.start.getLine());
       stateOpSplit.bd.textcol = cursor.getColumn();
     }
-    
+
     Edit.edit(NUL, false, 1);
     if(!Normal.editBusy)
       StateOpSplit.release();
@@ -2856,7 +2853,7 @@ private static int put_in_typebuf(String s, boolean colon)
             mch_memmove(newp, offset, ins_text, 0, ins_len);
             offset += ins_len;
             oldp_idx += bd.textcol;
-            mch_memmove(newp, offset, oldp, oldp_idx, 
+            mch_memmove(newp, offset, oldp, oldp_idx,
                         oldp.length() - 1 - oldp_idx); // STRLEN(oldp) + 1);
             Util.ml_replace(linenr, newp);
           }
@@ -3118,10 +3115,10 @@ private static int put_in_typebuf(String s, boolean colon)
       //curbuf->b_op_start = curwin->w_cursor;  /* default for '[ mark */
       //curbuf->b_op_end = curwin->w_cursor;	/* default for '] mark */
     }
-    
+
     if ((flags & PUT_LINE) != 0) // :put command or "p" in Visual line mode.
       y_type = MLINE;
-    
+
     if (y_size == 0 || y_array == null) {
       Msg.emsg("Nothing in register "
               + (regname == 0 ? "\"" : transchar(regname)));
@@ -3174,7 +3171,7 @@ private static int put_in_typebuf(String s, boolean colon)
 
       char c = gchar_pos(cursor);
       int endcol2 = 0;
-      
+
       MutableInt mi1 = new MutableInt();
       MutableInt mi2 = new MutableInt();
       if (dir == FORWARD && c != '\n') {
@@ -3188,7 +3185,7 @@ private static int put_in_typebuf(String s, boolean colon)
         col = mi1.getValue();
         endcol2 = mi2.getValue();
       }
-      
+
       bd = new block_def();
       bd.textcol = 0;
       int line = cursor.getLine();
@@ -3200,7 +3197,7 @@ private static int put_in_typebuf(String s, boolean colon)
         bd.endspaces = 0;
         vcol = 0;
         delcount = 0;
-        
+
         // add a new line
         if(line > G.curbuf.getLineCount()) {
           G.curwin.insertText(
@@ -3209,7 +3206,7 @@ private static int put_in_typebuf(String s, boolean colon)
         // get the old line and advance to the position to insert at
         oldp = Util.ml_get(line);
         oldlen = oldp.length() - 1; // -1 to ignore '\n'
-        
+
         for (ptr_idx = 0; vcol < col && (c = oldp.charAt(ptr_idx)) != '\n'; ) {
           // Count a tab for what it's worth (if list mode not on)
           incr = lbr_chartabsize(c, vcol);
@@ -3236,16 +3233,16 @@ private static int put_in_typebuf(String s, boolean colon)
             bd.endspaces = 0;
           }
         }
-        
+
         yanklen = y_array[i].length();//STRLEN(y_array[i]);
-        
+
         // calculate number of spaces required to fill right side of block
         spaces = y_width + 1;
         for (j = 0; j < yanklen; j++)
           spaces -= lbr_chartabsize(y_array[i].charAt(j), 0);
         if (spaces < 0)
           spaces = 0;
-        
+
         // insert the new text
         totlen = count * (yanklen + spaces) + bd.startspaces + bd.endspaces;
         newp = new StringBuilder(); //newp = alloc_check(totlen + oldlen + 1);
@@ -3253,7 +3250,7 @@ private static int put_in_typebuf(String s, boolean colon)
 
         // copy part up to cursor to new line
         ptr_idx = 0;
-        
+
         mch_memmove(newp, ptr_idx, oldp, 0, bd.textcol);
         ptr_idx += bd.textcol;
         ///may insert some spaces before the new text
@@ -3263,7 +3260,7 @@ private static int put_in_typebuf(String s, boolean colon)
         for (j = 0; j < count; ++j) {
           mch_memmove(newp, ptr_idx, y_array[i], 0, yanklen);
           ptr_idx += yanklen;
-          
+
           // insert block's trailing spaces only if there's text behind
           if ((j < count - 1 || !shortline) && spaces != 0) {
             copy_spaces(newp, ptr_idx, spaces);
@@ -3279,21 +3276,21 @@ private static int put_in_typebuf(String s, boolean colon)
                 (oldlen - bd.textcol - delcount + 1 - 1));
         newp.setLength(STRLEN(newp));
         Util.ml_replace(line, newp);
-        
+
         //++curwin.w_cursor.lnum;
         //if (i == 0)
         //  curwin.w_cursor.col += bd.startspaces;
         if(i == 0)
           finishPositionColumn += bd.startspaces;
       }
-      
+
       // Set '[ mark.
       //curbuf->b_op_start = curwin->w_cursor;
       //curbuf->b_op_start.lnum = lnum;
       ViFPOS op_start = cursor.copy(); // to get something to work with
       op_start.set(lnum, finishPositionColumn);
       G.curbuf.b_op_start.setMark(op_start);
-      
+
       // adjust '] mark
       //curbuf->b_op_end.lnum = curwin->w_cursor.lnum - 1;
       //curbuf->b_op_end.col = bd.textcol + totlen - 1;
@@ -3302,7 +3299,7 @@ private static int put_in_typebuf(String s, boolean colon)
         int len;
         int li = line - 1;
         int co = bd.textcol + totlen - 1;
-        
+
         /* in Insert mode we might be after the NUL, correct for that */
         //len = (colnr_T)STRLEN(ml_get_curline());
         //if (curwin.w_cursor.col > len)
@@ -3313,7 +3310,7 @@ private static int put_in_typebuf(String s, boolean colon)
         op_end.set(li, co);
       }
       G.curbuf.b_op_end.setMark(op_end);
-      
+
       if ((flags & PUT_CURSEND) != 0) {
         cursor.set(G.curbuf.b_op_end.getLine(),
                    G.curbuf.b_op_end.getColumn() + 1);
@@ -3321,14 +3318,14 @@ private static int put_in_typebuf(String s, boolean colon)
         //curwin.w_cursor.lnum = lnum;
         cursor.set(lnum, finishPositionColumn);
       }
-      
-      
+
+
 //        update_topline();
 //        if (flags & PUT_CURSEND)
 //            update_screen(NOT_VALID);
 //        else
 //            update_screen(VALID_TO_CURSCHAR);
-      
+
     } else { // not block mode, fpos still in efect
       String s = y_array[0].toString();
       // NEEDSWORK: HACK for PUT_LINE flag, NOTE: should not need to do
@@ -3350,7 +3347,7 @@ private static int put_in_typebuf(String s, boolean colon)
       ViFPOS endFpos = G.curbuf.createFPOS(offset + length - 1);
       G.curbuf.b_op_start.setMark(startFpos);
       G.curbuf.b_op_end.setMark(endFpos);
-      
+
       // now figure out cursor position
       if(y_type == MCHAR && y_size == 1) {
         G.curwin.w_cursor.set(endFpos);
@@ -3547,7 +3544,7 @@ private static int put_in_typebuf(String s, boolean colon)
     }
     return null;
   }
-    
+
     /**
      * Lost clipboard ownership, implementation of ClibboardOwner.
      */
@@ -3559,50 +3556,6 @@ private static int put_in_typebuf(String s, boolean colon)
       }
     }
 
-  ////////////////////////////////////////////////////////////////////////////
-  //
-    
-    /**
-     * For the current character offset in the current line,
-     * calculate the virtual offset. That is the offset if
-     * tabs are expanded. I *think* this is equivelent to getvcolStart(int).
-     *
-     * @deprecated
-     * use getvcol(ViTextView, ViFPOS, MutableInt, MutableInt, MutableInt)
-     */
-    static int getvcol() {
-      return getvcol(G.curwin.w_cursor.getColumn());
-    }
-    
-    /**
-     * This method returns the start vcol of param for current line
-     * @deprecated
-     * use getvcol(ViTextView, ViFPOS, MutableInt, MutableInt, MutableInt)
-     */
-    static int getvcol(int endCol) {
-      int vcol = 0;
-      MySegment seg = G.curbuf.getLineSegment(G.curwin.w_cursor.getLine());
-      int ptr = seg.offset;
-      int idx = -1;
-      char c;
-      while (idx < endCol - 1
-              && idx < seg.count - 1
-              && (c = seg.array[ptr]) != '\n') {
-        ++idx;
-        /* Count a tab for what it's worth (if list mode not on) */
-        vcol += lbr_chartabsize(c, vcol);
-        ++ptr;
-      }
-      return vcol;
-    }
-    
-  /*static void getvcol(ViFPOS fpos,
-                      MutableInt start,
-                      MutableInt cursor,
-                      MutableInt end) {
-    getvcol(G.curwin, fpos, start, cursor, end);
-  }*/
-    
     /**
      * Get virtual column number of pos.
      *  start: on the first position of this character (TAB, ctrl)
@@ -3610,7 +3563,7 @@ private static int put_in_typebuf(String s, boolean colon)
      *    end: on the last position of this character (TAB, ctrl)
      *
      * This is used very often, keep it fast!
-     * 
+     *
      * From vim's charset.c
      *
      * I think cursor is wrong for swing.
@@ -3642,7 +3595,7 @@ private static int put_in_typebuf(String s, boolean colon)
       int incr = 0;
       int vcol = 0;
       char c = 0;
-      
+
       int ts = buf.b_p_ts;
       MySegment seg = buf.getLineSegment(fpos.getLine());
       for (int col = fpos.getColumn(), ptr = seg.offset; ; --col, ++ptr) {
@@ -3660,10 +3613,10 @@ private static int put_in_typebuf(String s, boolean colon)
           incr = 1; // assuming all chars take up one space.
         }
 // #ifdef MULTI_BYTE ... #endif
-        
+
         if (col == 0)	// character at pos.col
           break;
-        
+
         vcol += incr;
       }
       if(start != null)
@@ -3678,7 +3631,7 @@ private static int put_in_typebuf(String s, boolean colon)
           cursor.setValue(vcol);	    // cursor at start
       }
     }
-    
+
     private static final MutableInt l1 = new MutableInt();
     private static final MutableInt l2 = new MutableInt();
     private static final MutableInt r1 = new MutableInt();
@@ -3693,11 +3646,11 @@ private static int put_in_typebuf(String s, boolean colon)
             MutableInt right) {
       getvcol(G.curwin, pos1, l1, null, r1);
       getvcol(G.curwin, pos2, l2, null, r2);
-      
+
       left.setValue(l1.compareTo(l2) < 0 ? l1.getValue() : l2.getValue());
       right.setValue(r1.compareTo(r2) > 0 ? r1.getValue() : r2.getValue());
     }
-    
+
     /**
      * show the current mode and ruler.
      * <br>
@@ -3715,7 +3668,7 @@ private static int put_in_typebuf(String s, boolean colon)
       if(do_mode /*|| Recording*/) {
         // wait a bit before overwriting an important message
         check_for_delay(false);
-        
+
         if(do_mode) {
           if (G.State == INSERT) mode = Edit.VI_MODE_INSERT;
           else if (G.State == REPLACE) mode = Edit.VI_MODE_REPLACE;
@@ -3723,11 +3676,11 @@ private static int put_in_typebuf(String s, boolean colon)
           else if (G.restart_edit == 'I') mode = Edit.VI_MODE_RESTART_I;
           else if (G.restart_edit == 'R') mode = Edit.VI_MODE_RESTART_R;
           else if (G.restart_edit == 'V') mode = Edit.VI_MODE_RESTART_V;
-          
+
           if (G.VIsual_active) {
             if (G.VIsual_select) mode = Edit.VI_MODE_SELECT;
             else mode = Edit.VI_MODE_VISUAL;
-            
+
             // It may be "VISUAL BLOCK" or "VISUAl LINE"
             if (G.VIsual_mode == Util.ctrl('V'))
               mode += " " + Edit.VI_MODE_BLOCK;
@@ -3735,61 +3688,61 @@ private static int put_in_typebuf(String s, boolean colon)
               mode += " " + Edit.VI_MODE_LINE;
           }
         }
-        
+
       }
       else {
         if(G.curwin.hasSelection())
           mode = ViManager.getFactory().getPlatformSelectionDisplayName();
       }
-      
+
       // Any "recording" string is handled by the disply function
       // if(G.Recording) {
       //   mode += "recording";
       // }
-      
+
       G.curwin.getStatusDisplay().displayMode(mode);
       G.clear_cmdline = false;
       return 0;
     }
-    
+
     static void update_screen(int type) {
       // NEEDSWORK: update_screen: think this is a nop
     }
-    
+
     static void check_for_delay(boolean check_msg_scroll) {
     }
-    
+
     //////////////////////////////////////////////////////////////////
     //
     // "undo.c"
     //
-    
+
     static void u_undo(int count) {
       int			old_lcount = G.curbuf.getLineCount();
-      
+
       while(count-- > 0) {
         G.curbuf.undo();
       }
-      
+
       msgmore(G.curbuf.getLineCount() - old_lcount);
     }
-    
+
     static void u_redo(int count) {
       int			old_lcount = G.curbuf.getLineCount();
-      
+
       while(count-- > 0) {
         G.curbuf.redo();
       }
-      
+
       msgmore(G.curbuf.getLineCount() - old_lcount);
     }
-    
+
     //////////////////////////////////////////////////////////////////
     //
     // "charset.c"
     //
-    
-    
+
+
     /**
      * return TRUE if 'c' is a keyword character: Letters and characters from
      * 'iskeyword' option for current buffer.
@@ -3797,7 +3750,7 @@ private static int put_in_typebuf(String s, boolean colon)
     static boolean vim_iswordc(char c) {
       return G.curbuf.b_chartab.iswordc(c);
     }
-    
+
     /**
      * Catch 22: chartab[] can't be initialized before the options are
      * initialized, and initializing options may cause transchar() to be called.
@@ -3807,7 +3760,7 @@ private static int put_in_typebuf(String s, boolean colon)
      */
     static String transchar(char c) {
       StringBuilder buf = new StringBuilder();
-      
+
     /* ***************************************************************
     i = 0;
     if (IS_SPECIAL(c))	    // special key code, display as ~@ char
@@ -3818,7 +3771,7 @@ private static int put_in_typebuf(String s, boolean colon)
       c = K_SECOND(c);
     }
      ******************************************************************/
-      
+
       if ((! false /*chartab_initialized*/ && ((c >= ' ' && c <= '~')))
       /*|| (chartab[c] & CHAR_IP)*/)    // printable character
       {
@@ -3828,7 +3781,7 @@ private static int put_in_typebuf(String s, boolean colon)
       }
       return buf.toString();
     }
-    
+
     static void transchar_nonprint(StringBuilder buf, char c) {
       if (c <= 0x7f) {				    // 0x00 - 0x1f and 0x7f
       /* *****************************************************************
@@ -3845,14 +3798,14 @@ private static int put_in_typebuf(String s, boolean colon)
         buf.append('~').append((char)((c-0x80) ^ 0x40)); // 0xff displayed as ~?
       }
     }
-    
+
     /**
      * Return the number of characters 'c' will take on the screen, taking
      * into account the size of a tab.
      * Use a define to make it fast, this is used very often!!!
      * Also see getvcol() below.
      */
-    
+
     static int lbr_chartabsize(char c, int col) {
       if (c == TAB && (!G.curwin.w_p_list /*|| lcs_tab1*/)) {
         int ts = G.curbuf.b_p_ts;
@@ -3862,7 +3815,7 @@ private static int put_in_typebuf(String s, boolean colon)
         return 1;
       }
     }
-    
+
 /*
  * return the number of characters the string 's' will take on the screen,
  * taking into account the size of a tab
@@ -3870,20 +3823,20 @@ private static int put_in_typebuf(String s, boolean colon)
     static int linetabsize(MySegment seg) {
       int col = 0;
       char ch;
-      
+
       ch = seg.first();
       while(ch != MySegment.DONE) {
         col += lbr_chartabsize(ch, col);
         ch = seg.next();
       }
-      
+
       return col;
     }
-    
+
     public static boolean vim_iswhite(char c) {
       return c == ' ' || c == '\t';
     }
-    
+
     /**
      * Skip over ' ' and '\t', return index, relative to
      * seg.offset, of next non-white.
@@ -3899,7 +3852,7 @@ private static int put_in_typebuf(String s, boolean colon)
       /*NOTREACHED*/
       throw new RuntimeException("no newline?");
     }
-    
+
     /**
      * Skip over ' ' and '\t', return index next non-white.
      * This is only used for specialized parsing, not part of main vi engine.
@@ -3912,7 +3865,7 @@ private static int put_in_typebuf(String s, boolean colon)
       }
       return idx;
     }
-    
+
     /**
      * Skip over not ' ' and '\t', return index next non-white.
      */
@@ -3924,16 +3877,16 @@ private static int put_in_typebuf(String s, boolean colon)
       }
       return idx;
     }
-    
+
     /**
      * Getdigits: Get a number from a string and skip over it.
      * Note: the argument is a pointer to a char_u pointer!
      */
-    
+
     static int getdigits(String s, int sidx, MutableInt mi) {
       int rval = 0;
       boolean isneg = false;
-      
+
       char v = s.charAt(sidx);
       if(v == '-' || v == '+') {
         if(v == '-') {
@@ -3941,7 +3894,7 @@ private static int put_in_typebuf(String s, boolean colon)
         }
         ++sidx;
       }
-      
+
       while(true) {
         if(sidx >= s.length()) {
           break;
@@ -3953,43 +3906,43 @@ private static int put_in_typebuf(String s, boolean colon)
         rval = 10 * rval + v - '0';
         ++sidx;
       }
-      
+
       if(isneg) {
         rval = -rval;
       }
       mi.setValue(rval);
       return sidx;
     }
-    
+
     //////////////////////////////////////////////////////////////////
     //
     // "ex_getln.c"
     //
-    
+
     static boolean cmdline_at_end() {
       return false;
     }
-    
+
     static boolean cmdline_overstrike() {
       return false;
     }
-    
+
     //////////////////////////////////////////////////////////////////
     //
     // term.c
     //
-    
+
     // NEEDSWORK: commandCharacters should be per edit window
     private static String commandCharacters;
     private static boolean ccDirty = false;
-    
+
     /** update the command characters */
     static void setCommandCharacters(String s) {
       if(!s.equals(commandCharacters))
         ccDirty = true;
       commandCharacters = s;
     }
-    
+
     /** This is used to do showcommand stuff. */
     public static void out_flush() {
       if(ccDirty) {
@@ -3997,7 +3950,7 @@ private static int put_in_typebuf(String s, boolean colon)
       }
       ccDirty = false;
     }
-    
+
     //////////////////////////////////////////////////////////////////
     //
     // undo/redo stuff
@@ -4095,9 +4048,9 @@ private static int put_in_typebuf(String s, boolean colon)
     }
 
 
-    
+
     private static int[] javaKeyMap;
-    
+
     /**
      * decode the vi key character embedded
      * in a unicode character and
@@ -4114,7 +4067,7 @@ private static int put_in_typebuf(String s, boolean colon)
       }
       return null;
     }
-    
+
     /**
      * Translate the vi internal key, see {@link KeyDefs}, into a swing keystroke.
      * @param vikey
@@ -4142,7 +4095,7 @@ private static int put_in_typebuf(String s, boolean colon)
       ViXlateKey xk = (ViXlateKey)ViManager.xlateKeymapAction(al);
       return xk.getXlateKey();
     }
-    
+
     final private static int[] controlKey = new int[] {
       KeyEvent.VK_AT,
       KeyEvent.VK_A,
@@ -4245,7 +4198,7 @@ private static int put_in_typebuf(String s, boolean colon)
 
     return jk;
   }
-    
+
     static class block_def {
       int       startspaces;   /* 'extra' cols of first char */
       int       endspaces;     /* 'extra' cols of first char */
@@ -4263,7 +4216,7 @@ private static int put_in_typebuf(String s, boolean colon)
       int    end_char_vcols;/* number of vcols of post-block char */
       int    start_char_vcols; /* number of vcols of pre-block char */
     };
-    
+
 /**
  * prepare a few things for block mode yank/delete/tilde
  *
@@ -4675,7 +4628,7 @@ op_do_addsub(char command, int Prenum1)
 //#ifdef FEAT_RIGHTLEFT...
     return OK;
 }
-    
+
     static void op_insert(OPARG oap, int count1) {
       if(!valid_op_range(oap))
         return;
@@ -4683,31 +4636,31 @@ op_do_addsub(char command, int Prenum1)
       block_def   bd = new block_def();
       final ViFPOS cursor = G.curwin.w_cursor;
       int i;
-      
+
       /* edit() changes this - record it for OP_APPEND */
       bd.is_MAX = (G.curwin.w_curswant == MAXCOL);
-      
+
       /* vis block is still marked. Get rid of it now. */
       cursor.setLine(oap.start.getLine());
       update_screen(INVERTED);
-      
+
       if (oap.block_mode) {
         /* Get the info about the block before entering the text */
         block_prep(oap, bd, oap.start.getLine(), true);
         //(long)STRLEN(ml_get(oap.start.lnum));
         CharSequence firstline = Util.ml_get(oap.start.getLine())
                 .subSequence(bd.textcol, Util.lineLength(oap.start.getLine()));
-        
+
         if (oap.op_type == OP_APPEND)
           firstline = firstline.subSequence(bd.textlen, firstline.length());
         pre_textlen = firstline.length();
-        
+
         StateOpSplit.acquire(StateSplitOwner.SPLIT_INSERT);
         stateOpSplit.oap = oap.copy();
         stateOpSplit.bd = bd;
         stateOpSplit.pre_textlen = pre_textlen;
       }
-      
+
       if (oap.op_type == OP_APPEND) {
         if (oap.block_mode) {
           /* Move the cursor to the character right of the block. */
@@ -4736,7 +4689,7 @@ op_do_addsub(char command, int Prenum1)
             inc_cursor();
         }
       }
-      
+
       Edit.edit(NUL, false, count1);
       if(!Normal.editBusy)
         StateOpSplit.release();
@@ -4747,7 +4700,7 @@ op_do_addsub(char command, int Prenum1)
       block_def   bd = stateOpSplit.bd;
       int         pre_textlen = stateOpSplit.pre_textlen;
       StateOpSplit.release();
-      
+
       int		offset;
       int		linenr;
       int		ins_len;
@@ -4755,16 +4708,16 @@ op_do_addsub(char command, int Prenum1)
       String      ins_text;
       StringBuilder newp;
       MySegment   oldp;
-      
-      
+
+
   /* if user has moved off this line, we don't know what to do, so do
   nothing */
       if (G.curwin.w_cursor.getLine() != oap.start.getLine())
         return;
-      
+
       if (oap.block_mode) {
         block_def bd2 = new block_def();
-        
+
     /*
      * Spaces and tabs in the indent may have changed to other spaces and
      * tabs.  Get the starting column again and correct the lenght.
@@ -4780,14 +4733,14 @@ op_do_addsub(char command, int Prenum1)
           bd.textcol = bd2.textcol;
           bd.textlen = bd2.textlen;
         }
-        
+
     /*
      * Subsequent calls to ml_get() flush the firstline data - take a
      * copy of the required string.
      */
         firstline = Util.ml_get(oap.start.getLine())
                 .subSequence(bd.textcol, Util.lineLength(oap.start.getLine()));
-        
+
         if (oap.op_type == OP_APPEND)
           firstline = firstline.subSequence(bd.textlen, firstline.length());
         if ((ins_len = firstline.length() - pre_textlen) > 0) {
@@ -4797,7 +4750,7 @@ op_do_addsub(char command, int Prenum1)
             /* block handled here */
             //if (u_save(oap.start.getLine(), (oap.end.getLine() + 1)) == OK)
             block_insert(oap, ins_text, (oap.op_type == OP_INSERT), bd);
-            
+
             G.curwin.w_cursor.setColumn(oap.start.getColumn());
             adjust_cursor();
             //check_cursor();
@@ -4817,7 +4770,7 @@ op_do_addsub(char command, int Prenum1)
       while(len-- > 0)
         dst.append(c);
     }
-    
+
     static void mch_memmove(StringBuilder dst, int dstIndex,
             CharSequence src, int srcIndex,
             int len) {
@@ -4831,22 +4784,22 @@ op_do_addsub(char command, int Prenum1)
         while(len-- > 0)
           dst.setCharAt(dstIndex++, src.charAt(srcIndex++));
     }
-    
+
     static void copy_spaces(StringBuilder dst, int index, int len) {
       while(len-- > 0)
         dst.setCharAt(index++, ' ');
     }
-    
+
     static int STRLEN(StringBuilder sb) {
       int len = sb.indexOf("\0");
       return len >= 0 ? len : sb.length();
     }
-    
+
     static void copy_chars(StringBuilder dst, int index, int len, char c) {
       while(len-- > 0)
         dst.setCharAt(index++, c);
     }
-    
+
     static boolean blockOpSwapText = true;
 /**
  * Insert string "s" (b_insert ? before : after) block :AKelly
@@ -4986,17 +4939,17 @@ op_do_addsub(char command, int Prenum1)
     StringBuilder newp;
     int 	lnum;		// loop var
     int		oldstate = G.State;
-    
+
     G.State = INSERT;		// don't want REPLACE for State
     s_len = s.length();
-    
+
     for (lnum = startLine; lnum <= endLine; lnum++) {
       block_prep(oap, bdp, lnum, true);
       if (bdp.is_short && b_insert)
         continue;	// OP_INSERT, line ends before block start
-      
+
       oldp = Util.ml_get(lnum);
-      
+
       count = 0;
       if (b_insert) {
         p_ts = bdp.start_char_vcols;
@@ -5022,7 +4975,7 @@ op_do_addsub(char command, int Prenum1)
           offset = bdp.textcol + bdp.textlen;
         }
       }
-      
+
       if(spaces == 0) {
         // No splitting or padding going on, can simply insert the string.
         // Profiling shows that 45% of time spent in Document.remove
@@ -5034,23 +4987,23 @@ op_do_addsub(char command, int Prenum1)
         newp = new StringBuilder();
         //newp = alloc_check((unsigned)(STRLEN(oldp)) + s_len + count + 1);
         newp.setLength(oldp.length() - 1 + s_len + count);
-        
+
         /* copy up to shifted part */
         mch_memmove(newp, 0, oldp, 0, offset);
         //oldp += offset;
         int oldp_idx = 0;
         oldp_idx += offset;
-        
+
         //int newp_idx = 0;
         //newp_idx += offset;
-        
+
         // insert pre-padding
         copy_spaces(newp, offset, spaces);
-        
+
         // copy the new text
         mch_memmove(newp, offset + spaces, s, 0, s_len);
         offset += s_len;
-        
+
         if (spaces != 0 && !bdp.is_short) {
           // insert post-padding
           copy_spaces(newp, offset + spaces, p_ts - spaces);
@@ -5059,17 +5012,17 @@ op_do_addsub(char command, int Prenum1)
           // We allowed for that TAB, remember this now
           count++;
         }
-        
+
         if (spaces > 0)
           offset += count;
         mch_memmove(newp, offset,
                     oldp, oldp_idx,
                     (oldp.length() - 1) - oldp_idx);
-        
+
         newp.setLength(STRLEN(newp));
         Util.ml_replace(lnum, newp);
       }
-      
+
       if (lnum == oap.end.getLine()) {
           // Set "']" mark to the end of the block instead of the end of
           // the insert in the first line.
@@ -5078,9 +5031,9 @@ op_do_addsub(char command, int Prenum1)
         G.curbuf.b_op_end.setMark(op_end);
       }
     } // for all lnum
-    
+
     // changed_lines(oap.start.lnum + 1, 0, oap.end.lnum + 1, 0L);
-    
+
     G.State = oldstate;
   }
 }

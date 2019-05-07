@@ -134,10 +134,10 @@ public class TestText {
   static JTextComponent.KeyBinding[] getBindings() {
     JTextComponent.KeyBinding[] bindings = {
 	new JTextComponent.KeyBinding(KeyStroke.getKeyStroke(
-		       (char)KeyEvent.VK_A, InputEvent.CTRL_MASK),
+		       (char)KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK),
 		       "popupcommand"),
 	new JTextComponent.KeyBinding(KeyStroke.getKeyStroke(
-		       '.'/*KeyEvent.VK_PERIOD*/, InputEvent.CTRL_MASK),
+		       '.'/*KeyEvent.VK_PERIOD*/, InputEvent.CTRL_DOWN_MASK),
 		       "re_ctrl_period"),
 	new JTextComponent.KeyBinding(KeyStroke.getKeyStroke(
 		       ':'/*(char)KeyEvent.VK_COLON*/),

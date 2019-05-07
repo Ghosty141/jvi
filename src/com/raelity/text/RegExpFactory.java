@@ -4,23 +4,24 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is jvi - vi editor clone.
- * 
+ *
  * The Initial Developer of the Original Code is Ernie Rael.
  * Portions created by Ernie Rael are
  * Copyright (C) 2000 Ernie Rael.  All Rights Reserved.
- * 
+ *
  * Contributor(s): Ernie Rael <err@raelity.com>
  */
 
 package com.raelity.text;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,27 +136,30 @@ public class RegExpFactory {
       initFactory();
 
       if (reClass == null) {
-	throw new NoClassDefFoundError("Can not find a RegExp handler.");
+        throw new NoClassDefFoundError("Can not find a RegExp handler.");
       }
     }
 
     RegExp regexp;
 
     try {
-      regexp = (RegExp) reClass.newInstance();
+      regexp = (RegExp) reClass.getDeclaredConstructor().newInstance();
 
       if (compflag) {
-	regexp.compile(pattern);
+        regexp.compile(pattern);
       }
     } catch (IllegalAccessException e) {
       throw new NoClassDefFoundError("IllegalAccessException really.");
     } catch (InstantiationException e) {
       throw new NoClassDefFoundError("InstantiationException really.");
+    } catch (NoSuchMethodException e) {
+      throw new NoClassDefFoundError("NoSuchMethodException really.");
+    } catch (SecurityException e) {
+      throw new NoClassDefFoundError("NoClassDefFoundError really.");
+    } catch (InvocationTargetException e) {
+      throw new NoClassDefFoundError("InvocationTargetException really.");
     }
 
-    // catch(NoSuchMethodException e) {
-    // throw new NoClassDefFoundError("NoSuchMethodException really.");
-    // }
     return regexp;
   }
 
@@ -311,12 +315,12 @@ public class RegExpFactory {
       "(?e=#)^([+-]?)(#d*)$", "1", null,
       "(?e=#)^([+-]?)(#d*)$", "-1", null,
       "xyz", "abc", null,
-      "#w+", "hello", new Character('#'),
+      "#w+", "hello", '#',
       "([abc]+)([def]+)([ghi]+)?([jkl]+)z*", "xxaaeekkzzzzzzz", null,
       "(?e=#)#s+(#w)+#s", "       how       ", null,
       "(?e=#)#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", null,
       "#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", null,
-      "#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", new Character('#')
+      "#s(\\\\)(##)(#w+)", " \\\\#hi(*&^^%", '#'
     };
 
     test1("com.raelity.text.RegExpJava", testInput);

@@ -128,9 +128,7 @@ public class SwingTextView extends TextView
     private static int gen;
 
     private static boolean didInit;
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=10)
+
     public static class Init implements ViInitialization
     {
         @Override
@@ -834,7 +832,7 @@ public class SwingTextView extends TextView
             Point pt = null;
             if(!w_p_wrap) {
                 // y position is the same for everything
-                r = ep.modelToView(fpos.getOffset());
+                r = ep.modelToView2D(fpos.getOffset()).getBounds();
                 // and put x at the viewport edge
                 pt = new Point(viewport.getViewPosition().x, r.y + r.height/2);
             }
@@ -843,7 +841,7 @@ public class SwingTextView extends TextView
                     if(w_p_wrap) {
                         offset = Utilities.getRowStart(ep, offset);
                     } else {
-                        offset = ep.viewToModel(pt);
+                        offset = ep.viewToModel2D(pt);
                     }
                     break;
 
@@ -856,8 +854,8 @@ public class SwingTextView extends TextView
                         assert pt != null; // to get rid of NP deref hint
                         pt.x += viewport.getExtentSize().width
                                         - (int)getMaxCharWidth();
-                        offset = ep.viewToModel(pt);
-                        r = ep.modelToView(offset);
+                        offset = ep.viewToModel2D(pt);
+                        r = ep.modelToView2D(offset).getBounds();
                         if(r.width == 0)
                             // these things usually come back as zero,
                             // I guess the offset is the position between chars
@@ -923,7 +921,7 @@ public class SwingTextView extends TextView
             if(HSCROLL.HALF == op) {
                 count = (int)((viewportExtent.width / getMaxCharWidth())/2);
             } else if(HSCROLL.CURSOR == op) {
-                cRect = ep.modelToView(fpos.getOffset());
+                cRect = ep.modelToView2D(fpos.getOffset()).getBounds();
                 cRect.width = (int)getMaxCharWidth();
                 if(HDIR.LEFT == hdir) {
                     count = (int)((viewportPosition.x + viewportExtent.width
@@ -950,7 +948,7 @@ public class SwingTextView extends TextView
 
             viewport.setViewPosition(pt);
             // make sure the cursor is visible
-            cRect = ep.modelToView(fpos.getOffset());
+            cRect = ep.modelToView2D(fpos.getOffset()).getBounds();
             cRect.width = (int)getMaxCharWidth();
             Rectangle vRect = viewport.getViewRect();
             if(!vRect.contains(cRect)) {
@@ -1047,7 +1045,7 @@ public class SwingTextView extends TextView
 
         int view_curswant = vwFromW(fpos, w_curswant);
 
-        int x = roundint(view_curswant * getMaxCharWidth());
+        float x = roundint(view_curswant * getMaxCharWidth());
         int limit = -1;
 
         while(distance-- > 0) {

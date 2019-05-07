@@ -42,9 +42,6 @@ public class Hook
     private static ViManager.ViManHook manHook;
     private Hook(){}
 
-    @ServiceProvider(service=ViInitialization.class,
-                     path="jVi/init",
-                     position=1)
     public static class Init implements ViInitialization
     {
       @Override

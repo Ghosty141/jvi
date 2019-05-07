@@ -47,9 +47,6 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
     private static final
             Logger LOG = Logger.getLogger(SetColonCommand.class.getName());
     
-    @ServiceProvider(service=ViInitialization.class,
-            path="jVi/init",
-            position=10)
     public static class Init implements ViInitialization
     {
         @Override
@@ -58,7 +55,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
             SetColonCommand.init();
         }
     }
-    
+
     private static void init()
     {
         ColonCommands.register("se", "set", new SetColonCommand(), null);
@@ -67,10 +64,10 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
     private SetColonCommand()
     {
     }
-    
+
     public static class SetCommandException extends Exception
     {
-        
+
         public SetCommandException(String msg)
         {
             super(msg);
@@ -122,7 +119,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
         boolean isPre()  { return this == PRE; }
         boolean isSub()  { return this == SUB; }
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -136,7 +133,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
         Util.beep_flush();
         throw new SetCommandException(msg);
     }
-    
+
     public static void parseSetOptions(List<String> eventArgs)
     {
         if (eventArgs.isEmpty() ||
@@ -171,7 +168,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
             }
         }
     }
-    
+
     /**
      * This holds the results of parsing a set command
      */
@@ -285,7 +282,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
 
         return null;
     }
-    
+
     /**
      * Set voptState with information about the argument vopt.
      * The info about the option is taken from curwin/curbuf.
@@ -328,7 +325,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
 
         return voptState;
     }
-    
+
     // Most of the argument are class members
     private static Object newOptionValue(String arg, VimOption vopt,
                                          VimOptionState voptState)
@@ -479,7 +476,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
                 else
                     bs = 0;
             }
-            
+
             /* do not add if already there */
             if ((adding || prepending) && s < origval.length())
             {
@@ -488,7 +485,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
                 newval = origval;
             }
         }
-            
+
         // concatenate the two strings; add a ',' if
         // needed
         if (adding || prepending)
@@ -551,7 +548,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
 
         return newval;
     }
-    
+
     @SuppressWarnings({"unchecked", "unchecked"})
     private static String formatDisplayValue(VimOption vopt,
                                              VimOptionState voptState)
@@ -629,7 +626,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
 
         osa.close();
     }
-    
+
     /**
      * Some options (for example w_p_wrap) are per window; however the platform
      * (NB) may support it only per buffer. So if the user changes it with set,
@@ -645,9 +642,9 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
         // if var is not window then nothing to do
         if(!vopt.isWin())
             return;
-        
+
         ViBuffer buf = tv.getBuffer();
-        
+
         for(ViTextView tv01 : ViManager.getFactory().getViTextViewSet()) {
             if(tv01.getBuffer() != buf || tv01 == tv)
                 continue;
@@ -656,7 +653,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
             setLocalOption(tv01, vopt);
         }
     }
-    
+
     public static void syncAllInstances(String varName)
     {
         VimOption vopt = VimOption.lookupVarName(varName);
@@ -674,7 +671,7 @@ public class SetColonCommand extends ColonCommands.AbstractColonAction
             }
         }
     }
-    
+
     private static void setLocalOption(ViOptionBag bag, VimOption vopt)
     {
         VimOptionState voptState = determineOptionState(vopt, null);
