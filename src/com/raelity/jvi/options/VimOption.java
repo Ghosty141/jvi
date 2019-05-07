@@ -188,6 +188,7 @@ public final class VimOption {
 
 
 final private static VimOption[] vopts = new VimOption[]{
+new VimOption("auditoryBell","ab",   Options.auditoryBell,    S.P_GBL, nullF),
 new VimOption("backspace",   "bs",   Options.backspace,       S.P_GBL, nullF),
 new VimOption("clipboard",   "cb",   Options.unnamedClipboard,S.P_GBL, nullF),
 new VimOption("cpo_j",       "",     Options.endOfSentence,   S.P_GBL, EnumSet.of(F.HIDE)),

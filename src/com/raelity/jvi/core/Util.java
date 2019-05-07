@@ -3,18 +3,18 @@
  * License Version 1.1 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of
  * the License at http://www.mozilla.org/MPL/
- * 
+ *
  * Software distributed under the License is distributed on an "AS
  * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
  * implied. See the License for the specific language governing
  * rights and limitations under the License.
- * 
+ *
  * The Original Code is jvi - vi editor clone.
- * 
+ *
  * The Initial Developer of the Original Code is Ernie Rael.
  * Portions created by Ernie Rael are
  * Copyright (C) 2000 Ernie Rael.  All Rights Reserved.
- * 
+ *
  * Contributor(s): Ernie Rael <err@raelity.com>
  */
 package com.raelity.jvi.core;
@@ -57,10 +57,13 @@ public class Util {
    * then use beep_flush().
    */
   public static void vim_beep() {
-    G.curwin.bell();
+    if(Options.getOption(Options.auditoryBell).getBoolean()) {
+        G.curwin.bell();
+    }
   }
 
-  /** 
+
+  /**
    * Returns the substring of c in s or null if c not part of s.
    * @param s the string to search in
    * @param c the character to search for
@@ -199,11 +202,11 @@ public class Util {
     MySegment seg = new MySegment(G.curbuf.getLineSegment(lnum));
     return seg;
   }
-  
+
   static MySegment ml_get_curline() {
     return ml_get(G.curwin.w_cursor.getLine());
   }
-  
+
   /** get pointer to positin 'pos', the returned MySegment's CharacterIterator
    * is initialized to the character at pos.
    * <p>
@@ -254,7 +257,7 @@ public class Util {
     MySegment seg = G.curbuf.getLineSegment(lnum);
     return seg.count == 0 || seg.array[seg.offset] == '\n';
   }
-  
+
   static boolean bufempty() {
       return G.curbuf.getLineCount() == 1
              && lineempty(1);

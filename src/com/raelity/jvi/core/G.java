@@ -244,6 +244,8 @@ public class G implements ViOptionBag
         }
     }
 
+    // auditory bell
+    static boolean p_ab;
     // backspace over start of insert, and more
     static int p_bs;
     // clipboard, treat as boolean for 'unnamed'
