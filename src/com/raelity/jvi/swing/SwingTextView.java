@@ -841,7 +841,7 @@ public class SwingTextView extends TextView
                     if(w_p_wrap) {
                         offset = Utilities.getRowStart(ep, offset);
                     } else {
-                        offset = ep.viewToModel(pt);
+                        offset = ep.viewToModel2D(pt);
                     }
                     break;
 
@@ -854,7 +854,7 @@ public class SwingTextView extends TextView
                         assert pt != null; // to get rid of NP deref hint
                         pt.x += viewport.getExtentSize().width
                                         - (int)getMaxCharWidth();
-                        offset = ep.viewToModel(pt);
+                        offset = ep.viewToModel2D(pt);
                         r = ep.modelToView2D(offset).getBounds();
                         if(r.width == 0)
                             // these things usually come back as zero,

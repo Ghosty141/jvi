@@ -49,7 +49,7 @@ public class FreezeViewport implements DocumentListener, ChangeListener
             nLine = root.getElementCount();
             // Get the offset of the first displayed char in the top line
             Point pt = vp.getViewPosition();
-            int offset = ep.viewToModel(pt);
+            int offset = ep.viewToModel2D(pt);
             // Determine the line number of the top displayed line
             topLine = root.getElementIndex(offset);
             //System.err.format("FreezeViewport: top %d\n", topLine);
@@ -151,7 +151,7 @@ public class FreezeViewport implements DocumentListener, ChangeListener
     public void stateChanged(ChangeEvent e)
     {
         Point pt = vp.getViewPosition();
-        int offset = ep.viewToModel(pt);
+        int offset = ep.viewToModel2D(pt);
         Element root = doc.getDefaultRootElement();
         int topl = root.getElementIndex(offset);
         System.err.println("Viewport stateChanged: top line " + topl);
