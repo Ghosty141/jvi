@@ -1045,7 +1045,7 @@ public class SwingTextView extends TextView
 
         int view_curswant = vwFromW(fpos, w_curswant);
 
-        int x = roundint(view_curswant * getMaxCharWidth());
+        float x = roundint(view_curswant * getMaxCharWidth());
         int limit = -1;
 
         while(distance-- > 0) {
