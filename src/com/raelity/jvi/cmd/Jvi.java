@@ -67,7 +67,7 @@ import com.raelity.jvi.swing.ui.options.OptionsPanel;
  *      mapJepFrame.put(editor, frame);
  *      static private MyPropertySheetDialog dialog;
  * </pre>
- * 
+ *
  * @author Ernie Rael <err at raelity.com>
  */
 public class Jvi
@@ -316,12 +316,6 @@ public class Jvi
 
     @SuppressWarnings("static-access")
     static void showOptionsDialog(Frame owner) {
-        // if(dialog == null) {
-        //     dialog = new JDialog(owner, "jVi Options");
-        //     dialog.add("Center", getTabbedOptions());
-        //     dialog.pack();
-        // }
-        // dialog.setVisible(true);
         if(dialog == null) {
             optionsPanel = new OptionsPanel(new OptionsPanel.ChangeNotify() {
                 @Override
@@ -332,13 +326,7 @@ public class Jvi
             });
             dialog = new MyPropertySheetDialog(optionsPanel, owner, "jVi Options");
             dialog.getBanner().setVisible(false);
-            dialog.getContentPane().add(optionsPanel, BorderLayout.EAST);
-            //dialog.getContentPane().add(optionsPanel, BorderLayout.CENTER);
-
-            // dialog.getButtonPane().add(new JButton("Default ALL"));
-            // dialog.getButtonPane().add(new JButton("Set Default"));
-
-            //dialog.setDialogMode(dialog.CLOSE_DIALOG);
+            dialog.add(optionsPanel, BorderLayout.CENTER);
             dialog.setDialogMode(dialog.OK_CANCEL_DIALOG);
             dialog.pack();
             dialog.centerOnScreen();
@@ -349,4 +337,4 @@ public class Jvi
         dialog.setVisible(true);
     }
 
-} // end com.raelity.jvi.cmd.Jvi;
+}
