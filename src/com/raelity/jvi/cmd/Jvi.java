@@ -20,13 +20,11 @@
 
 package com.raelity.jvi.cmd;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Frame;
-import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,11 +46,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.TabSet;
 import javax.swing.text.TabStop;
 
-import com.l2fprod.common.propertysheet.PropertySheetDialog;
-
 import com.raelity.jvi.manager.AppViews;
 import com.raelity.jvi.manager.ViManager;
-import com.raelity.jvi.swing.ui.options.OptionsPanel;
 
 /**
  * The following are the hooks into jVi used in this class.
@@ -236,7 +231,7 @@ public class Jvi
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 try {
-                                    showOptionsDialog(m_frame1);
+                                    new OptionDialog(m_frame1);
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
@@ -281,60 +276,6 @@ public class Jvi
             //        + " thrown by main() [3]:  " + e.getMessage() );
         }
         // wait for frame to exit, so JUnitTest won't kill it
-    }
-
-    static private MyPropertySheetDialog dialog;
-    static private OptionsPanel optionsPanel;
-
-    static class MyPropertySheetDialog extends PropertySheetDialog {
-        OptionsPanel op;
-
-        // NEEDSWORK: move this to Jvi command.
-        public MyPropertySheetDialog(OptionsPanel op,
-                                     Frame owner,
-                                     String title) throws HeadlessException
-        {
-            super(owner, title);
-            this.op = op;
-        }
-
-        @Override
-        public void cancel()
-        {
-            super.cancel();
-            optionsPanel.cancel();
-        }
-
-        @Override
-        public void ok()
-        {
-            super.ok();
-            optionsPanel.ok();
-        }
-
-    }
-
-    @SuppressWarnings("static-access")
-    static void showOptionsDialog(Frame owner) {
-        if(dialog == null) {
-            optionsPanel = new OptionsPanel(new OptionsPanel.ChangeNotify() {
-                @Override
-                public void change()
-                {
-                    System.err.println("Property Change");
-                }
-            });
-            dialog = new MyPropertySheetDialog(optionsPanel, owner, "jVi Options");
-            dialog.getBanner().setVisible(false);
-            dialog.add(optionsPanel, BorderLayout.CENTER);
-            dialog.setDialogMode(dialog.OK_CANCEL_DIALOG);
-            dialog.pack();
-            dialog.centerOnScreen();
-        }
-        if(!dialog.isVisible()) {
-            optionsPanel.load();
-        }
-        dialog.setVisible(true);
     }
 
 }
