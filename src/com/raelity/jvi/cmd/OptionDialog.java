@@ -41,9 +41,7 @@ public class OptionDialog extends JDialog {
         setSize(500,500);
         setLayout(new BorderLayout());
 
-        optionsPanel = new OptionsPanel(() -> {
-            System.err.println("Property Change");
-        });
+        optionsPanel = new OptionsPanel();
         add(optionsPanel, BorderLayout.CENTER);
         add(getButtonBar(), BorderLayout.SOUTH);
         setVisible(true);

@@ -47,17 +47,22 @@ import com.raelity.jvi.options.OptionsBean;
  * The module requires com.l2fprod.common...
  * see http://common.l2fprod.com/ Only the jar l2fprod-common-sheet.jar is
  * needed.
- * 
+ *
  * NOTE: this file can simply be excluded from compilation and everything
  * will work fine since it is invoked through reflection.
- * 
+ *
  * @author erra
  */
 public class OptionsPanel extends JPanel {
+
     ChangeNotify changeNotify;
     private List<Options.EditControl> optionSheets
             = new ArrayList<Options.EditControl>();
     private MapCommands mapCommands;
+
+    public OptionsPanel() {
+        this(() -> {});
+    }
 
     public OptionsPanel(ChangeNotify changeNotify) {
         this.changeNotify = changeNotify;
